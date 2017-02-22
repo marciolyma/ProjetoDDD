@@ -1,0 +1,123 @@
+﻿@model PagedList.IPagedList<ProjetoDDD.Apresentacao.MVC.ViewModels.ClienteViewModel>
+
+@*<style>
+        #tblCliente > thead > tr th:nth-child(2) {
+            width: 100%;
+        }
+
+        #tblCliente > thead > tr th:nth-child(3) {
+            width: 100%;
+        }
+
+        #tblCliente > thead > tr th:nth-child(4) {
+            width: 100%;
+        }
+
+        #cadastro {
+            width: 70%;
+            margin: 0 auto;
+        }
+    </style>*@
+
+<div id="cadastro">
+    <table id="tblCliente" class="table table-bordered table-hover table-responsive">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Cliente</th>
+                <th>E-amil</th>
+                <th>Observações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="width:20px">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="500" data-close-others="true">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                @*<li><a data-modal="" href="/Cliente/Details/@item.ClienteId"></a></li>
+                                    <li><a data-modal="" href="/Cliente/Edit/@item.ClienteId"></a></li>
+                                    <li><a data-modal="" href="/Cliente/Delete/@item.ClienteId"></a></li>*@
+
+                                <li>@Html.ActionLink("Detalhes", "Details", new { id = item.ClienteId }, new { data_modal = "" })</li>
+                                <li>@Html.ActionLink("Editar", "Edit", new { id = item.ClienteId }, new { data_modal = "" })</li>
+                                <li class="divider"></li>
+                                <li>@Html.ActionLink("Excluir", "Delete", new { id = item.ClienteId }, new { data_modal = "" })</li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FullNome)
+                        <div class="text-muted">
+                            <small>
+                                @Html.DisplayName("Ativo: " + (item.Ativo ? "Sim" : "Não"))
+                            </small>
+                        </div>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Observações", "Observacao", new { id = item.ClienteId })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="panel-footer">
+        @{
+            if (Model.TotalItemCount != Model.Count)
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="pagina">
+                            Página @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
+
+                            @if (Model.HasPreviousPage)
+                            {
+                                @Html.ActionLink("<<", "Index", new { pagina = 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })
+                                @Html.Raw(" ");
+                                @Html.ActionLink("< Anterior", "Index", new { pagina = Model.PageNumber - 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })
+                            }
+                            else
+                            {
+                                @:<<
+                                @Html.Raw(" ");
+                                @:< Anterior
+                        }
+
+                            @if (Model.HasNextPage)
+                            {
+                                @Html.ActionLink("Próxima >", "Index", new { pagina = Model.PageNumber + 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })
+                                @Html.Raw(" ");
+                                @Html.ActionLink(">>", "Index", new { pagina = Model.PageCount, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })
+                            }
+                            else
+                            {
+                                @:Próxima >
+                                @Html.Raw(" ")
+                                @:>>
+                        }
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+        initModal();
+    });
+</script>
+
+
+

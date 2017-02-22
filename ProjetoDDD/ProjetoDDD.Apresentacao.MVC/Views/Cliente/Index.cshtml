@@ -1,0 +1,77 @@
+﻿@model IEnumerable<ProjetoDDD.Apresentacao.MVC.ViewModels.ClienteViewModel>
+@Styles.Render("~/Content/css")
+
+@{
+    ViewBag.Title = "Index";
+}
+<script src="~/Scripts/ckeditor.js"></script>
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">Entrar no sistema</div>
+    <div class="panel-body">
+
+        <div class="row">
+            <div class="col-xs-8 col-sm-10 col-md-10">
+                <button id="btnCliente" class="btn btn-success btn-small pull-left">
+                    <span id="spanEspecial" class="glyphicon glyphicon-search"></span> Clientes Especiais
+                </button>
+            </div>
+            <div class="col-xs-4 col-sm-2 col-md-2">
+                <a class="btn btn-small btn-primary pull-right" data-modal="" href="/Cliente/Create" id="btnCreate">
+                    <span id="spanRegistrar" title="Registrar Novo" class="glyphicon glyphicon-plus-sign"></span> Registrar Novo
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="slide">
+        @Html.Partial("_ListaClientePartial", Model)
+    </div>
+
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modalform")
+    <script>
+        $(document).ready(function () {
+            $("#btnCliente").click(function () {
+
+                var texto = $("#btnCliente").text();
+                if (texto.indexOf('Clientes') != -1) {
+                    $("#btnCliente").text("Retornar a lista");
+                    $("#btnCliente").removeClass("btn btn-success btn-small pull-left");
+                    $("#btnCliente").addClass("btn btn-primary btn-small pull-left");
+                    $("#tblCliente").html();
+                    $("#total").hide();
+                    $("#pagina").hide();
+                    $("#slide").slideUp("slow")
+                    $("#tblCliente").load("/Cliente/ClienteEspecial/");
+                    $("#slide").slideDown("slow")
+                } else {
+                    $("#btnCliente").text("Clientes Especiais");
+                    $("#btnCliente").removeClass("btn btn-primary btn-small pull-left");
+                    $("#btnCliente").addClass("btn btn-success btn-small pull-left");
+                    $("#tblCliente").html();
+                    $("#total").hide();
+                    $("#pagina").hide();
+                    $("#slide").slideUp("slow")
+                    $("#tblCliente").load("/Cliente/RetornarTodos/");
+                    $("#slide").slideDown("slow")
+                }
+            });
+            $("#myModal").on('shown.bs.modal', function () {
+                $("#Nome").focus().select();
+            });
+        });
+    </script>
+}

@@ -1,0 +1,84 @@
+﻿@model PagedList.IPagedList<ProjetoDDD.Apresentacao.MVC.ViewModels.ClienteViewModel>
+
+@{
+    ViewBag.Title = "ListagemCliente";
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading"><h5>Relatório Listagem de Clientes</h5></div>
+    <div class="panel-body">
+
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-striped">
+                    <tr>
+                        <th>Nome </th>
+                        <th>E-mail </th>
+                        <th>Data Cadastro</th>
+                        <th>Ativo </th>
+                    </tr>
+
+                    @foreach (var item in Model)
+            {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.FullNome)
+                            <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                            <td>@Html.DisplayFor(modelItem => item.DataCadastro)</td>
+                            <td>@Html.DisplayName((item.Ativo ? "Sim" : "Não"))</td>
+                        </tr>
+                    }
+                    <tr>
+                        <td><b>@Model.Count registos de @Model.TotalItemCount</b></td>
+                        <td><a href="/Relatorio/ListagemCliente?gerarPDF=true"><b>GERAR PDF</b></a></td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+        <div class="panel-footer">
+            @{
+                if (Model.TotalItemCount != Model.Count)
+                {
+                    <div class="row">
+                        <div class="col-md-12">
+                            Página @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
+
+                            @if (Model.HasPreviousPage)
+                {
+                                @Html.ActionLink("<<", "ListagemCliente", new { pagina = 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })
+                                @Html.Raw(" ");
+                                @Html.ActionLink("< Anterior", "ListagemCliente", new { pagina = Model.PageNumber - 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })
+                            }
+                            else
+                            {
+                                @:<<
+                                @Html.Raw(" ");
+                                @:< Anterior
+                }
+
+                            @if (Model.HasNextPage)
+                {
+                                @Html.ActionLink("Próxima >", "ListagemCliente", new { pagina = Model.PageNumber + 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })
+                                @Html.Raw(" ");
+                                @Html.ActionLink(">>", "ListagemCliente", new { pagina = Model.PageCount, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })
+                            }
+                            else
+                            {
+                                @:Próxima >
+                                @Html.Raw(" ")
+                                @:>>
+                }
+
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>

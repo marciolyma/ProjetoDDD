@@ -1,0 +1,72 @@
+﻿@model IEnumerable<ProjetoDDD.Apresentacao.MVC.ViewModels.ProdutoViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+<script src="~/Scripts/enterTab.js"></script>
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+<div class="panel panel-primary">
+    <div class="panel-heading">Cadastro de Produtos</div>
+
+    <div class="panel-body ">
+        <div class="row">
+            <div class="col-xs-10 col-sm-10 col-md-10 form-inline">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="nomeProduto" placeholder="Didite o Nome do Produto">
+                    <button id="btnBuscaproduto" class="btn btn-info">
+                        <span class="glyphicon glyphicon-search"></span> Pesquisar
+                    </button>
+                </div>
+            </div>
+            <div class="col-xs-2 col-sm-2 col-md-2">
+                <a class="btn btn-small btn-primary pull-right" data-modal="" href="/Produto/Create" id="btnCreate">
+                    <span id="spanRegistrar" title="Registrar Novo" class="glyphicon glyphicon-plus-sign"></span> Registrar Novo
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="slide">
+        @Html.Partial("_ListaProdutosPartial", Model)
+    </div>
+
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modalform")
+    <script>
+        $(document).ready(function () {
+            //Script Busca por nome Produto
+            $("#btnBuscaproduto").click(function () {
+                var pesquisa = $("#nomeProduto").val();
+                $("#tblProduto").html("");
+                $("#total").hide();
+                $("#pagina").hide();
+                $("#slide").slideUp("slow")
+                $("#tblProduto").load("/Produto/BuscarPorNome/" + pesquisa);
+                $("#slide").slideDown("slow")
+            });
+            // Fim Script Busca por nome Produto
+
+            $("#myModal").on('shown.bs.modal', function () {
+                $("#Nome").focus().select();
+            });
+
+            $("#myModal").on('hidden.bs.modal', function () {
+                location.reload();
+            });
+        });
+
+
+    </script>
+
+}

@@ -1,0 +1,37 @@
+﻿@using Microsoft.AspNet.Identity
+@using IdentitySample.Models
+
+@{
+    var manager = new UserManager<ApplicationUser>(new Microsoft.AspNet.Identity.EntityFramework.UserStore<ApplicationUser>(new ApplicationDbContext()));
+}
+
+@if (Request.IsAuthenticated) {
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" })) {
+        @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                @{
+                    var currentUser = manager.FindById(User.Identity.GetUserId());
+                }
+                @Html.ActionLink("Olá " + currentUser.NomeUsuario + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            </li>
+            @*<li><a href="javascript:document.getElementById('logoutForm').submit()">Sair</a></li>*@
+            <li>@Html.ActionLink("Sair", "SignOut", "Home")</li>
+        </ul>
+    }
+}
+else {
+    <ul class="nav navbar-nav navbar-right">
+        @{
+            var user = manager.Users.Count();
+            if (user == 0)
+            {
+                <li>@Html.ActionLink("Registrar Administrador", "CriarAdministrador", "Account")</li>
+            }
+        }
+        @*<li>@Html.ActionLink("Registrar", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>*@
+        <li>@Html.ActionLink("Entrar", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}
+

@@ -1,0 +1,110 @@
+﻿@model PagedList.IPagedList<ProjetoDDD.Apresentacao.MVC.ViewModels.ProdutoViewModel>
+
+@{
+    <style>
+        .right {
+            text-align: right;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+}
+
+<div id="cadastro">
+    <table class="table table-bordered table-hover table-responsive" id="tblProduto">
+        <thead>
+            <tr>
+                <th>Produto</th>
+                <th>Cliente</th>
+                <th>Valor</th>
+                <th>Disponível</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Cliente.Nome) @Html.DisplayFor(modelItem => item.Cliente.SobreNome)</td>
+                    <td class="right">@Html.DisplayFor(modelItem => item.Valor)</td>
+                    <td>@Html.DisplayName((item.Disponivel ? "Sim" : "Não"))</td>
+
+                    <td>
+                        <a data-modal="" href="/Produto/Edit/@item.ProdutoId" class="btn btn-xs btn-warning" data-toggle="tooltip" data-placement="top" title="Editar">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                        <a data-modal="" href="/Produto/Details/@item.ProdutoId" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="top" title="Detalhes">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </a>
+                        <a data-modal="" href="/Produto/Delete/@item.ProdutoId" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Excluir">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="panel-footer">
+        @{
+            if (Model.TotalItemCount != Model.Count)
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="pagina">
+                            Página @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
+
+                            @if (Model.HasPreviousPage)
+                            {
+                                @Html.ActionLink("<<", "Index", new { pagina = 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })
+                                @Html.Raw(" ");
+                                @Html.ActionLink("< Anterior", "Index", new { pagina = Model.PageNumber - 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })
+                            }
+                            else
+                            {
+                                @:<<
+                                @Html.Raw(" ");
+                                @:< Anterior
+                        }
+
+                            @if (Model.HasNextPage)
+                            {
+                                @Html.ActionLink("Próxima >", "Index", new { pagina = Model.PageNumber + 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })
+                                @Html.Raw(" ");
+                                @Html.ActionLink(">>", "Index", new { pagina = Model.PageCount, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })
+                            }
+                            else
+                            {
+                                @:Próxima >
+                                @Html.Raw(" ")
+                                @:>>
+                        }
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+</div>
+
+@*<div id="total" class="panel-footer">Total = @Model.Count()</div>*@
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modalform")
+}
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+        initModal();
+    });
+</script>

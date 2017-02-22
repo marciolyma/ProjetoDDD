@@ -1,0 +1,13 @@
+﻿@{
+    ViewBag.Title = "Checar E-mail";
+}
+<h2>@ViewBag.Title.</h2>
+<p class="text-info">
+    Verifique seu e-mail e confirme seu endereço de e-mail.
+</p>
+<a class="btn btn-primary" href="/Account/ReenviarEmail/@ViewBag.User">Reenviar E-mail</a>
+
+@*<p class="text-danger">
+    For DEMO only: You can click this link to confirm the email: <a href="@ViewBag.Link">link</a>
+    Please change this code to register an email service in IdentityConfig to send an email.
+</p>*@

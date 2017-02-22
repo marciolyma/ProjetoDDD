@@ -1,0 +1,54 @@
+﻿@using IdentitySample.Models
+@model ProjetoDDD.Apresentacao.MVC.Models.ClaimViewModel
+
+@{
+    ViewBag.Title = "SetUserClaim";
+}
+
+<h2>Cadastro de Claims</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Claims do usuário</h4>
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @{
+            ApplicationUser user = ViewBag.User;
+        }
+        @Html.Hidden("id", user.Id)
+
+
+        <h4>Adicione um novo Claim para o Usuário: @ViewBag.User.NomeUsuario</h4>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Type", null, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Value, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Value, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Value, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Criar" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+            }
+
+<div>
+    @Html.ActionLink("Voltar para a Lista", "Index")
+</div>

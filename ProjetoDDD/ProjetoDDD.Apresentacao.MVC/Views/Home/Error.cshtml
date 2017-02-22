@@ -1,0 +1,30 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+@Styles.Render("~/Content/css")
+@section Scripts {
+    @Scripts.Render("~/bundles/modalform")
+}
+@{
+    ViewBag.Title = "Error";
+}
+
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">Erro de Acesso</div>
+    <div class="panel-body">
+        <div class="row">
+            <div style="text-align:center; margin:10px; padding:10px;">
+                <h1>Você não está autorizado a acessar esta página do Site.</h1>
+
+                <a href="/home/index/" class="btn btn-warning">Voltar ao site</a>
+            </div>
+
+        </div>
+    </div>
+</div>

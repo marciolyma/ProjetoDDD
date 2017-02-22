@@ -1,0 +1,75 @@
+﻿@model IdentitySample.Models.IndexViewModel
+@{
+    ViewBag.Title = "Configurar sua conta";
+}
+
+<h2>@ViewBag.Title.</h2>
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div class="row">
+    <div class="col-md-8">
+        <p>
+            @if (Model.HasPassword)
+            {
+                @Html.ActionLink("Mude sua senha", "ChangePassword")
+            }
+            else
+            {
+                @Html.ActionLink("escolha uma senha", "SetPassword")
+            }
+        </p>
+        <p>
+            Número de telefone: @(Model.PhoneNumber ?? "Nenhum") [
+            @if (Model.PhoneNumber != null)
+            {
+                @Html.ActionLink("Alterar", "AddPhoneNumber")
+                @: &nbsp;|&nbsp;
+                @Html.ActionLink("Remover", "RemovePhoneNumber")
+            }
+            else
+            {
+                @Html.ActionLink("Adicionar", "AddPhoneNumber")
+            }
+            ]
+        </p>
+        @*<p>
+            External Logins: @Model.Logins.Count
+            @Html.ActionLink("[Manage]", "ManageLogins")
+        </p>*@
+        @if (Model.TwoFactor)
+        {
+            <form method="post" action="/Manage/DisableTFA">
+                <p>
+                    Two factor estão ativados atualmente:
+                    <input type="submit" value="Desabilitar" class="btn btn-default"/>
+                </p>
+            </form>
+        }
+        else
+        {
+            <form method="post" action="/Manage/EnableTFA">
+                <p>
+                    Two factor estão atualmente desativados:
+                    <input type="submit" value="Ativar" class="btn btn-default"/>
+                </p>
+            </form>
+        }
+        @if (Model.BrowserRemembered)
+        {
+            <form method="post" action="/Manage/ForgetBrowser">
+                <p>
+                    O Browser é lembrado para o two factor:
+                    <input type="submit" value="Esquecer Browser" class="btn btn-default" />
+                </p>
+            </form>
+        }
+        else
+        {
+            <form method="post" action="/Manage/RememberBrowser">
+                <p>
+                    O Browser não é lembrado para o two factor:
+                    <input type="submit" value="Lembrar Browser" class="btn btn-default"/>
+                </p>
+            </form>
+        }
+    </div>
+</div>

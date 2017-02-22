@@ -1,0 +1,41 @@
+﻿@model ProjetoDDD.Apresentacao.MVC.ViewModels.ClienteViewModel
+
+<head>
+    <script src="~/Content/CkEditor/ckeditor.js"></script>
+</head>
+
+@{
+    ViewBag.Title = "Observacao";
+}
+<h2>Observações</h2>
+<h4>Cliente: @Model.Nome</h4>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ClienteId)
+        @Html.HiddenFor(model => model.Nome)
+        @Html.HiddenFor(model => model.SobreNome)
+        @Html.HiddenFor(model => model.Email)
+        @Html.HiddenFor(model => model.DataCadastro)
+        @Html.HiddenFor(model => model.Ativo)
+
+        @Html.TextAreaFor(model => model.Observacoes, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+        <hr />
+        <div class="form-horizontal">
+            <div class="row">
+                <input class="btn btn-primary" type="submit" value="Gravar" />
+                <a class="btn btn-default" href="/Cliente/Index/">Cancelar</a>
+            </div>
+        </div>
+}
+
+<script type="text/javascript">
+    CKEDITOR.replace('Observacoes', {
+        height: 260
+    });
+</script>

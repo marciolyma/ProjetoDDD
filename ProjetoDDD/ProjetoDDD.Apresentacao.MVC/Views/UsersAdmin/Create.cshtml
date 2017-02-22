@@ -1,0 +1,99 @@
+﻿@model IdentitySample.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Create";
+}
+
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">Tela cadastro de usuário</div>
+    <div class="panel-body">
+
+        @using (Html.BeginForm("Create", "UsersAdmin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <h4>Criar uma conta nova.</h4>
+            <hr />
+            @*@Html.ValidationSummary("", new { @class = "text-error" })*@
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Email)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.NomeUsuario, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.NomeUsuario, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.NomeUsuario)
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Password)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ConfirmPassword)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">
+                    Selecione as Roles do usuário
+                </label>
+                <div class="col-md-10">
+                    @foreach (var item in (SelectList)ViewBag.RoleId)
+                    {
+                        <input type="checkbox" name="SelectedRoles" value="@item.Value" class="checkbox-inline" />
+                        @Html.Label(item.Value, new { @class = "control-label" })
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label">
+                    Selecione as Claims do usuário
+                </label>
+                <div class="col-md-10">
+                    @foreach (var item in (SelectList)ViewBag.ClaimId)
+                    {
+                        <input type="checkbox" name="SelectedClaims" value="@item.Value" class="checkbox-inline" />
+                        @Html.Label(item.Value, new { @class = "control-label" })
+                    }
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" class="btn btn-success" value="Salvar" />
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            tabimput();
+        });
+    </script>
+}

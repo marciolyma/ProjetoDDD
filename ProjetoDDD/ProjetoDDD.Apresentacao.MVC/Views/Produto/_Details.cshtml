@@ -1,0 +1,50 @@
+﻿@model ProjetoDDD.Apresentacao.MVC.ViewModels.ProdutoViewModel
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Detalhes do Produto</h4>
+</div>
+
+<div class="modal-body">
+
+    <div>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Nome)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Nome)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Valor)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Valor)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Disponivel)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Disponivel)
+            </dd>
+
+            <dt>
+                @Html.DisplayName("Cliente")
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Cliente.Nome)
+            </dd>
+
+        </dl>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button class="btn" data-dismiss="modal">Ok</button>
+</div>
