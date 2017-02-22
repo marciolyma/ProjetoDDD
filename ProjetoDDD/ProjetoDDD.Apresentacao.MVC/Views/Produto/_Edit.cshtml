@@ -61,6 +61,11 @@
 <script>
     $(document).ready(function () {
         tabimput();
+        $('#Valor').priceFormat({
+            prefix: '',
+            centsSeparator: ',',
+            thousandsSeparator: '.'
+        });
     });
 </script>
 

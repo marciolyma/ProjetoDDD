@@ -24,10 +24,14 @@ namespace IdentitySample
                       "~/Scripts/bootstrap-hover-dropdown.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/site").Include(
-            "~/Scripts/site.js"));
+                      "~/Scripts/site.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/modalform").Include(
                       "~/Scripts/modalform.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/priceformat").Include(
+                      "~/Scripts/jquery.priceformat.js",
+                      "~/Scripts/prototype.priceformat.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/enterTab").Include(
                       "~/Scripts/enterTab.js"));

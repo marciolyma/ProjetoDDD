@@ -106,5 +106,10 @@
     $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip();
         initModal();
+        $('#Valor').priceFormat({
+            prefix: '',
+            centsSeparator: ',',
+            thousandsSeparator: '.'
+        });
     });
 </script>

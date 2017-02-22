@@ -1,4 +1,5 @@
-﻿using ProjetoDDD.Apresentacao.MVC.App_Start;
+﻿using ProjetoDDD.Apresentacao.Helpers;
+using ProjetoDDD.Apresentacao.MVC.App_Start;
 using ProjetoDDD.Apresentacao.MVC.AutoMapper;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -18,6 +19,8 @@ namespace IdentitySample
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             SimpleInjectorConfiguration.Inicialize();
             AutoMapperConfig.RegisterMapping();
+            ModelBinders.Binders.Add(typeof(decimal), new DecimalModelBinder());
+            ModelBinders.Binders.Add(typeof(decimal?), new DecimalModelBinder());
         }
     }
 }

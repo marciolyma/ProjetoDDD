@@ -14,6 +14,7 @@ namespace ProjetoDDD.Apresentacao.MVC.ViewModels
         public string Nome { get; set; }
 
         [Required(ErrorMessage = "Valor tem que ser informado")]
+        [DisplayFormat(DataFormatString ="{0:N}", ApplyFormatInEditMode = true)]
         public decimal Valor { get; set; }
 
         [DisplayName("Disponível?")]

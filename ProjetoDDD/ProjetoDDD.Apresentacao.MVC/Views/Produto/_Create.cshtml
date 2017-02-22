@@ -56,8 +56,14 @@
 }
 
 <script>
-    $(document).ready(function () {
-        tabimput();
-        $("#Nome").focus();
-    });
+        $(document).ready(function () {
+            tabimput();
+            $("#Nome").focus();
+            $('#Valor').priceFormat({
+                prefix: '',
+                centsSeparator: ',',
+                thousandsSeparator: '.'
+            });
+
+        });
 </script>
